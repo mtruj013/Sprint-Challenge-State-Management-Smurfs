@@ -35,6 +35,13 @@ export const smurfReducer = (state = initialState, action) => {
                 error: '',
                 smurf: action.payload
             }
+        case 'DELETE_SMURFS_SUCCESS':
+            return {
+                ...state,
+                isLoading:false,
+                error: '',
+                smurf: action.payload
+            }
         default:
             return state;
     }

@@ -1,7 +1,7 @@
 import React, { useEffect} from 'react';
-import {fetchSmurfs } from '../store/actions/smurfActions';
+import {fetchSmurfs, deleteSmurfs } from '../store/actions/smurfActions';
 import { connect } from 'react-redux';
-import Loader from 'react-loader-spinner';
+
 
 
 const SmurfList = props => {
@@ -10,6 +10,9 @@ const SmurfList = props => {
         props.fetchSmurfs();
     }, [])
 
+    // const deleteSmurf = e => {
+    //     props.deleteSmurfs()
+    // }
 
     return(
         <div>
@@ -17,7 +20,7 @@ const SmurfList = props => {
             {props.smurf && props.smurf.map(smurf => {
                 return(
                     <div key={smurf.id}>
-                        <h3>{smurf.name}</h3>
+                        <h3 >{smurf.name}</h3>
                         <p>{smurf.age}</p>
                         <p>{smurf.height}</p>
                     </div>

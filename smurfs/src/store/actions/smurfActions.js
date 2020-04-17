@@ -26,3 +26,15 @@ export const postSmurfs = (smurf) => dispatch => {
         console.log(err)
     })
 }
+
+export const deleteSmurfs = (smurfId) => dispatch => {
+    dispatch({type: "DELETE_SMURFS_START"})
+    axios
+    .delete(`http://localhost:3333/${smurfId}`)
+    .then(res => {
+        dispatch({type: "DELETE_SMURFS_SUCCESS", payload: res.data})
+    })
+    .catch(err => [
+        console.log(err)
+    ])
+}
