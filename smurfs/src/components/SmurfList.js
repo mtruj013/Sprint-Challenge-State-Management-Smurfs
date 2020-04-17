@@ -7,8 +7,13 @@ import Loader from 'react-loader-spinner';
 const SmurfList = props => {
     return(
         <div>
+            {console.log("smurflist props", props)}
             <h1>Click to get Smurf!</h1>
-
+            {props.isLoading && (
+                <Loader type="TailSpin" color="#00bff" height={80} width={80}/>
+            )}
+            <button onClick={() => props.fetchSmurfs()}>GetSmurf</button>
+            {props}
         </div>
     )
 }
