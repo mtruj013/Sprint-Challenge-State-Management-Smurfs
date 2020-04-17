@@ -1,34 +1,81 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { postSmurfs } from '../store/actions/smurfActions'
+
+
+const initialValue = {
+    name: "",
+    age: "",
+    height: "",
+}
 
 const SmurfForm = props => {
-    
-    const [newSmurf, setNewSmurf] = useState({
-        name: "",
-        age: "",
-        height: "",
-        id: Date.now()
-    })
+
+    const [newSmurf, setNewSmurf] = useState(initialValue)
+
+
+
+    const handleChanges = e => {
+        e.preventDefault();
+        setNewSmurf({ ...newSmurf, [e.target.name]: e.target.value });
+    }
+
+    const submitForm = e => {
+        e.preventDefault();
+        props.postSmurfs(newSmurf)
+        setNewSmurf({
+            name: "",
+            age: "",
+            height: ""
+        })
+    }
 
 
     return (
         <div>
-            <form>
-                <label htmlFor="smurf-form">
+            <form onSubmit={submitForm}>
+                <label htmlFor="name">
+                    Name:
                     <input
+                        type="text"
                         name="name"
-                        age="age"
-                        height= "height"
-                        id= ""
+                        value={newSmurf.name}
+                        onChange={handleChanges}
                     />
-
-                    <button>Add a smurf!</button>
                 </label>
+                <label htmlFor="age">
+                    Age:
+                    <input
+                        type="number"
+                        name="age"
+                        value={newSmurf.age}
+                        onChange={handleChanges}
+                    />
+                </label>
+                <label htmlFor="height">
+                    Height:
+                    <input
+                        type="text"
+                        name="height"
+                        value={newSmurf.height}
+                        onChange={handleChanges}
+                    />
+                </label>
+                <button type="submit" onCLick={() => props.postSmurf}>Add a smurf!</button>
             </form>
         </div>
     )
 }
+const mapStateToProps = state => {
+    return {
+       smurf: state.smurf 
+    }
+}
 
-export default SmurfForm;
+export default connect(
+    mapStateToProps,
+    { postSmurfs }
+)(SmurfForm);
 
 //finish handle changes
 //finish form submit 

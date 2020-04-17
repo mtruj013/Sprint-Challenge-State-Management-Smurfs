@@ -1,19 +1,28 @@
-import React from 'react';
+import React, { useEffect} from 'react';
 import {fetchSmurfs } from '../store/actions/smurfActions';
 import { connect } from 'react-redux';
 import Loader from 'react-loader-spinner';
 
 
 const SmurfList = props => {
+
+    useEffect(() => {
+        props.fetchSmurfs();
+    }, [])
+
+
     return(
         <div>
-            {console.log("smurflist props", props)}
-            <h1>Click to get Smurf!</h1>
-            {props.isLoading && (
-                <Loader type="TailSpin" color="#00bff" height={80} width={80}/>
-            )}
-            <button onClick={() => props.fetchSmurfs()}>GetSmurf</button>
-            {props}
+            <h1>Smurfs </h1>
+            {props.smurf && props.smurf.map(smurf => {
+                return(
+                    <div key={smurf.id}>
+                        <h3>{smurf.name}</h3>
+                        <p>{smurf.age}</p>
+                        <p>{smurf.height}</p>
+                    </div>
+                )
+            })}
         </div>
     )
 }
@@ -21,12 +30,9 @@ const SmurfList = props => {
 const mapStateToProps = state => {
     console.log("from map state", state)
     return{
-        name: state.smurf.name,
-        age: state.smurf.age,
-        height: state.smurf.height,
-        id: state.smurf.id,
-        isLoading: state.smurf.isLoading,
-        error: state.smurf.error
+      smurf: state.smurf,
+      isLoading: state.isLoading,
+      error: state.error
     }
 }
 export default connect(
